@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_restx import Api
 
-from api.resources.event import ns as ns_events
+from app.resources.event import ns as ns_events
 
 blueprint = Blueprint("api", __name__)
 
