@@ -1,9 +1,9 @@
 from flask_restx import Namespace, Resource
 
-ns = Namespace(name="events", description="Events")
+events_ns = Namespace(name="events", description="Events")
 
 
-@ns.route("/")
+@events_ns.route("/")
 class Event(Resource):
     def get(self):
         return {}
