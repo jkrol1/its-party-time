@@ -7,7 +7,6 @@ authors = ["jkrol1 <jk.jankrol@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 Flask = "^2.1.2"
-flask-restx = "^0.5.1"
 Flask-SQLAlchemy = "^2.5.1"
 flask-marshmallow = "^0.14.0"
 Flask-Migrate = "^3.1.0"
@@ -16,12 +15,16 @@ marshmallow-sqlalchemy = "^0.28.0"
 Flask-HTTPAuth = "^4.7.0"
 flask-hintful = "^0.0.7"
 psycopg2-binary = "^2.9.3"
+flask-apispec = "0.11.0"
+Jinja2 = "3.1.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 mypy = "^0.961"
 Flask-HTTPAuth-stubs = "^0.1.5"
 sqlalchemy-stubs = "^0.4"
+pytest-stub = "^1.1.0"
+Faker = "^13.14.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

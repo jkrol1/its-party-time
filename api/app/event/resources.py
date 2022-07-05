@@ -1,9 +1,8 @@
-from flask_restx import Namespace, Resource
+from flask import Blueprint
 
-events_ns = Namespace(name="events", description="Events")
+blueprint = Blueprint("event", __name__, url_prefix="/api/v1/events")
 
 
-@events_ns.route("/")
-class Event(Resource):
-    def get(self):
-        return {}
+@blueprint.get("/")
+def get_event(*args, **kwargs):
+    return {}

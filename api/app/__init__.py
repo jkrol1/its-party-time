@@ -1,14 +1,14 @@
+from typing import Type
+
 from flask import Flask
 
-from app.api_blueprint import api_blueprint
-from app.extensions import db, ma, migrate, api
+from app.extensions import db, ma, migrate, api_spec
 from config import Config
 
-from app.event import events_ns
-from app.user import User, users_ns
+from app import event, token, user
 
 
-def create_app(config: Config = Config) -> Flask:
+def create_app(config: Type[Config]) -> Flask:
     """
     Application factory
 
@@ -21,7 +21,7 @@ def create_app(config: Config = Config) -> Flask:
     app.config.from_object(config)
     _register_extensions(app)
     _register_blueprints(app)
-    _register_api_namespaces()
+    _register_apispec()
 
     return app
 
@@ -30,12 +30,14 @@ def _register_extensions(app: Flask) -> None:
     db.init_app(app)
     migrate.init_app(app, db)
     ma.init_app(app)
+    api_spec.init_app(app)
 
 
 def _register_blueprints(app: Flask) -> None:
-    app.register_blueprint(api_blueprint)
+    app.register_blueprint(event.resources.blueprint)
+    app.register_blueprint(user.resources.blueprint)
 
 
-def _register_api_namespaces():
-    api.add_namespace(events_ns)
-    api.add_namespace(users_ns)
+def _register_apispec() -> None:
+    api_spec.register(user.resources.create_user, blueprint=user.resources.blueprint.name)
+    api_spec.register(event.resources.get_event, blueprint=event.resources.blueprint.name)

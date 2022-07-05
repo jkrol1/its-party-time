@@ -1,1 +1,1 @@
-from app.event.resources import events_ns
+from app.event import resources

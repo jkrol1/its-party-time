@@ -1,24 +1,19 @@
 from typing import Tuple
 
-from flask import jsonify, request, Response
-from flask_restx import fields, Namespace, Resource
+from flask import Blueprint
+from flask_apispec import marshal_with, use_kwargs
 
 from app.extensions import db
 from app.user.serializers import user_schema
+from app.user import User
 
-users_ns = Namespace(name="users", description="Users")
-user_model_doc = users_ns.model("User", {
-    "username": fields.String,
-    "password": fields.String,
-    "email": fields.String
-})
+blueprint = Blueprint("user", __name__, url_prefix="/api/v1/users")
 
 
-@users_ns.route("/")
-class User(Resource):
-    @users_ns.expect(user_model_doc)
-    def post(self) -> Tuple[Response, int]:
-        user = user_schema.load(request.get_json())
-        db.session.add(user)
-        db.session.commit()
-        return jsonify(user_id=user.id), 201
+@blueprint.post("/")
+@use_kwargs(user_schema)
+@marshal_with(user_schema)
+def create_user(user) -> Tuple[User, int]:
+    db.session.add(user)
+    db.session.commit()
+    return user, 201
