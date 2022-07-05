@@ -31,7 +31,7 @@ def test_client(app) -> Generator[FlaskClient, None, None]:
 
 @pytest.fixture()
 def db(test_client) -> Generator[SQLAlchemy, None, None]:
-    yield db_fsa
+    return db_fsa
 
 
 @pytest.fixture()
