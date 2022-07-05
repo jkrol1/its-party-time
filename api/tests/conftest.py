@@ -1,6 +1,5 @@
 from typing import Generator
 
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask.testing import FlaskClient
 import pytest
@@ -14,16 +13,12 @@ from tests.fake import get_fake_user_post_request_body
 
 
 @pytest.fixture()
-def app() -> Flask:
+def test_client() -> Generator[FlaskClient, None, None]:
     app = create_app(TestConfig)
-    return app
 
-
-@pytest.fixture()
-def test_client(app) -> Generator[FlaskClient, None, None]:
-    with app.test_client() as testing_client:
-        with app.app_context():
-            with app.test_request_context():
+    with app.app_context():
+        with app.test_request_context():
+            with app.test_client() as testing_client:
                 _setup_db()
                 yield testing_client
                 _teardown_db()

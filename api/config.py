@@ -25,4 +25,3 @@ class TestConfig(Config):
     SQLALCHEMY_TEST_SCHEMA_NAME: str = "test"
     SQLALCHEMY_ENGINE_OPTIONS: Dict = {
         "execution_options": {"schema_translate_map": {None: SQLALCHEMY_TEST_SCHEMA_NAME}}}
-    PRESERVE_CONTEXT_ON_EXCEPTION = False
