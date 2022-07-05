@@ -30,7 +30,7 @@ def test_client(app) -> Generator[FlaskClient, None, None]:
 
 
 @pytest.fixture()
-def db(test_client) -> Generator[SQLAlchemy, None, None]:
+def db(test_client) -> SQLAlchemy:
     return db_fsa
 
 
