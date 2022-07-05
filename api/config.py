@@ -21,7 +21,7 @@ class ProdConfig(Config):
 
 
 class TestConfig(Config):
-    DEBUG: bool = False
+    DEBUG: bool = 0
     TESTING: bool = True
     SQLALCHEMY_TEST_SCHEMA_NAME: str = "test"
     SQLALCHEMY_ENGINE_OPTIONS: Dict = {

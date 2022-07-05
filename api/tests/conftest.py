@@ -42,11 +42,11 @@ def user(db) -> User:
     return user
 
 
-def _setup_db():
+def _setup_db() -> None:
     db_fsa.engine.execute(db_fsa.text(f"CREATE SCHEMA IF NOT EXISTS {TestConfig.SQLALCHEMY_TEST_SCHEMA_NAME}"))
     db_fsa.create_all()
 
 
-def _teardown_db():
+def _teardown_db() -> None:
     db_fsa.session.close()
     db_fsa.drop_all()
