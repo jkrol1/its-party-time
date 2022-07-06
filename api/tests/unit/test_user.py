@@ -11,3 +11,5 @@ def test_create_user(test_client: FlaskClient) -> None:
     response = test_client.post(url_for("user.create_user"), json=post_request_body)
 
     assert response.status_code == HTTPStatus.CREATED
+    assert response.json["email"] == post_request_body["email"]
+    assert response.json["username"] == post_request_body["username"]
