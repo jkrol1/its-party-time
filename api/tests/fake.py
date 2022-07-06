@@ -1,13 +1,22 @@
-from typing import Dict
+from dataclasses import dataclass, asdict
 
 from faker import Faker
 
 fake = Faker()
 
 
-def get_fake_user_post_request_body() -> Dict[str, str]:
-    return {
-        "username": fake.name(),
-        "password": fake.password(),
-        "email": fake.email()
-    }
+class ToDictMixin:
+    def to_dict(self):
+        return asdict(self)
+
+
+@dataclass()
+class FakeUser(ToDictMixin):
+    username: str = fake.name()
+    password: str = fake.password()
+    email: str = fake.email()
+
+
+@dataclass
+class FakeInputData:
+    user: FakeUser = FakeUser()

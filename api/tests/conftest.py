@@ -9,7 +9,7 @@ from app.extensions import db as db_fsa
 from app.user import User
 from config import TestConfig
 
-from tests.fake import get_fake_user_post_request_body
+from tests.fake import FakeInputData
 
 
 @pytest.fixture()
@@ -30,8 +30,13 @@ def db(test_client) -> SQLAlchemy:
 
 
 @pytest.fixture()
-def user(db) -> User:
-    user = User(**get_fake_user_post_request_body())
+def fake_input_data() -> FakeInputData:
+    return FakeInputData()
+
+
+@pytest.fixture()
+def user(db, fake_input_data) -> User:
+    user = User(**fake_input_data.user.to_dict())
     db.session.add(user)
     db.session.commit()
     return user

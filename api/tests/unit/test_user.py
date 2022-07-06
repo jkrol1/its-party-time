@@ -3,13 +3,12 @@ from http import HTTPStatus
 from flask import url_for
 from flask.testing import FlaskClient
 
-from tests.fake import get_fake_user_post_request_body
+from tests.fake import FakeInputData
 
 
-def test_create_user(test_client: FlaskClient) -> None:
-    post_request_body = get_fake_user_post_request_body()
-    response = test_client.post(url_for("user.create_user"), json=post_request_body)
+def test_create_user(test_client: FlaskClient, fake_input_data: FakeInputData) -> None:
+    response = test_client.post(url_for("user.create_user"), json=fake_input_data.user.to_dict())
 
     assert response.status_code == HTTPStatus.CREATED
-    assert response.json["email"] == post_request_body["email"]
-    assert response.json["username"] == post_request_body["username"]
+    assert response.json["email"] == fake_input_data.user.email
+    assert response.json["username"] == fake_input_data.user.username
