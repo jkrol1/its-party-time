@@ -10,7 +10,7 @@ class ToDictMixin:
         return asdict(self)
 
 
-@dataclass()
+@dataclass
 class FakeUser(ToDictMixin):
     username: str = fake.name()
     password: str = fake.password()
