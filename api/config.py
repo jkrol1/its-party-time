@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from datetime import timedelta
 import os
 from typing import Dict
 
@@ -8,6 +11,9 @@ load_dotenv()
 
 class Config:
     SECRET_KEY: str = os.environ["SECRET_KEY"]
+    JWT_SECRET_KEY = os.environ["JWT_SECRET_KEY"]
+    JWT_ACCESS_TOKEN_EXPIRES: timedelta = timedelta(minutes=15)
+    JWT_REFRESH_TOKEN_EXPIRES: timedelta = timedelta(days=30)
     SQLALCHEMY_DATABASE_URI: str = os.environ["SQLALCHEMY_DATABASE_URI"]
     SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
 

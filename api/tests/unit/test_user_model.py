@@ -1,4 +1,4 @@
-from app.user import User
+from app.user.models import User
 
 from tests.fake import FakeInputData
 

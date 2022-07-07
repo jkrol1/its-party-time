@@ -6,7 +6,7 @@ import pytest
 
 from app import create_app
 from app.extensions import db as db_fsa
-from app.user import User
+from app.user.models import User
 from config import TestConfig
 
 from tests.fake import FakeInputData

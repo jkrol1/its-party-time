@@ -134,7 +134,7 @@ openapi-specgen = ">=0.0.6"
 name = "flask-httpauth"
 version = "4.7.0"
 description = "HTTP authentication for Flask routes"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -153,6 +153,22 @@ python-versions = "*"
 Flask-HTTPAuth = ">=4.0.0"
 mypy = ">=0.720"
 typing-extensions = ">=3.7.4"
+
+[[package]]
+name = "flask-jwt-extended"
+version = "4.4.2"
+description = "Extended JWT integration with Flask"
+category = "main"
+optional = false
+python-versions = ">=3.6,<4"
+
+[package.dependencies]
+Flask = ">=2.0,<3.0"
+PyJWT = ">=2.0,<3.0"
+Werkzeug = ">=0.14"
+
+[package.extras]
+asymmetric_crypto = ["cryptography (>=3.3.1)"]
 
 [[package]]
 name = "flask-marshmallow"
@@ -406,6 +422,20 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "pyjwt"
+version = "2.4.0"
+description = "JSON Web Token implementation in Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+crypto = ["cryptography (>=3.3.1)"]
+dev = ["sphinx", "sphinx-rtd-theme", "zope.interface", "cryptography (>=3.3.1)", "pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)", "mypy", "pre-commit"]
+docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
+tests = ["pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)"]
+
+[[package]]
 name = "pyparsing"
 version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
@@ -592,7 +622,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "685d1225b369e16e995f13ef9a59a2654033ee1ae0c2a83ff2810026da20334a"
+content-hash = "9d67563af4b87d6edf4f8520933897d10356d97179c57cd78e566db444ef4093"
 
 [metadata.files]
 alembic = [
@@ -642,6 +672,10 @@ flask-httpauth = [
 flask-httpauth-stubs = [
     {file = "Flask-HTTPAuth-stubs-0.1.5.tar.gz", hash = "sha256:01656a4bb68a748943282c53d3f7b8efe115d9160f41592041d0137513fce772"},
     {file = "Flask_HTTPAuth_stubs-0.1.5-py3-none-any.whl", hash = "sha256:cfafcd070bf5090b9b0119656bcfb17e4d3153307ce44f06594ce0aea30f2ebe"},
+]
+flask-jwt-extended = [
+    {file = "Flask-JWT-Extended-4.4.2.tar.gz", hash = "sha256:f582bba980fcf728ab7250dbb6fbdca8d4e074e24eb2915b01184376ffff98c7"},
+    {file = "Flask_JWT_Extended-4.4.2-py2.py3-none-any.whl", hash = "sha256:793f9e720d0e679cea8f99af6436819bfd1622fc345afeff48878c09f42548f6"},
 ]
 flask-marshmallow = [
     {file = "flask-marshmallow-0.14.0.tar.gz", hash = "sha256:bd01a6372cbe50e36f205cfff0fc5dab0b7b662c4c8b2c4fc06a3151b2950950"},
@@ -888,6 +922,10 @@ psycopg2-binary = [
 py = [
     {file = "py-1.11.0-py2.py3-none-any.whl", hash = "sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"},
     {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
+]
+pyjwt = [
+    {file = "PyJWT-2.4.0-py3-none-any.whl", hash = "sha256:72d1d253f32dbd4f5c88eaf1fdc62f3a19f676ccbadb9dbc5d07e951b2b26daf"},
+    {file = "PyJWT-2.4.0.tar.gz", hash = "sha256:d42908208c699b3b973cbeb01a969ba6a96c821eefb1c5bfe4c390c01d67abba"},
 ]
 pyparsing = [
     {file = "pyparsing-3.0.9-py3-none-any.whl", hash = "sha256:5026bae9a10eeaefb61dab2f09052b9f4307d44aee4eda64b309723d8d206bbc"},

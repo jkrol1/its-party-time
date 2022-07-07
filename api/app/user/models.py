@@ -7,6 +7,7 @@ from app import db
 
 class User(db.Model):
     __tablename__ = "users"
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), index=True, unique=True, nullable=False)
     email = db.Column(db.String(64), index=True, unique=True, nullable=False)
@@ -14,13 +15,15 @@ class User(db.Model):
     first_seen = db.Column(db.DateTime, default=datetime.utcnow)
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
+    tokens = db.relationship("Token", back_populates="user", lazy="noload")
+
     @property
-    def password(self):
+    def password(self) -> None:
         raise AttributeError("password attribute is not readable")
 
     @password.setter
-    def password(self, password):
+    def password(self, password: str) -> None:
         self.password_hash = generate_password_hash(password)
 
-    def verify_password(self, password):
+    def verify_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
