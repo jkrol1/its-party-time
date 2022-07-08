@@ -31,4 +31,4 @@ class Token(db.Model):
                 is_revoked=False,
                 user_id=user.id
             ))
-            db.session.commit()
+        db.session.commit()

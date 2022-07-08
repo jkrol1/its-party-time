@@ -51,3 +51,4 @@ def _register_callbacks() -> None:
 def _register_apispec() -> None:
     api_spec.register(user.resources.register_user, blueprint=user.resources.blueprint.name)
     api_spec.register(event.resources.get_event, blueprint=event.resources.blueprint.name)
+    api_spec.register(token.resources.create_tokens, blueprint=token.resources.blueprint.name)
