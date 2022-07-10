@@ -7,6 +7,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 
 from app.user.models import User
 from app.user.serializers import user_login_schema
+from app.exceptions import InvalidCredentialsError
 from app.token.models import Token
 from app.token.serializers import token_response_schema
 
@@ -24,4 +25,4 @@ def create_tokens(email: str, password: str) -> Tuple[Dict[str, str], int]:
         Token.register_tokens_for_user([access_token, refresh_token], user)
         return dict(access_token=access_token, refresh_token=refresh_token), HTTPStatus.CREATED
     else:
-        raise Exception
+        raise InvalidCredentialsError
