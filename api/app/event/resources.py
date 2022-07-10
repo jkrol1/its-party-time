@@ -11,4 +11,4 @@ blueprint = Blueprint("event", __name__, url_prefix="/api/v1/events")
 @jwt_required()
 def get_event() -> EndpointResponse:
     user = current_user
-    return {"userId": user.id}, HTTPStatus.CREATED.value
+    return {"userId": user.id}, HTTPStatus.CREATED  # TBD
