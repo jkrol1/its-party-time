@@ -4,6 +4,8 @@ from datetime import timedelta
 import os
 from typing import Dict
 
+from apispec import APISpec
+from apispec.ext.marshmallow import MarshmallowPlugin
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -16,6 +18,13 @@ class Config:
     JWT_REFRESH_TOKEN_EXPIRES: timedelta = timedelta(days=30)
     SQLALCHEMY_DATABASE_URI: str = os.environ["SQLALCHEMY_DATABASE_URI"]
     SQLALCHEMY_TRACK_MODIFICATIONS: bool = False
+    APISPEC_SPEC: APISpec = APISpec(
+        title="It's party time API",
+        version='v1',
+        openapi_version="3.0.0",
+        plugins=[MarshmallowPlugin()],
+    )
+    APISPEC_SWAGGER_URL: str = "/swagger/"
 
 
 class DevConfig(Config):

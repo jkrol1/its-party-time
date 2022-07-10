@@ -20,8 +20,9 @@ def create_app(config: Type[Config]) -> Flask:
 
     app = Flask(__name__)
     app.config.from_object(config)
-    _register_extensions(app)
+
     _register_blueprints(app)
+    _register_extensions(app)
     _register_callbacks()
     _register_apispec()
 
