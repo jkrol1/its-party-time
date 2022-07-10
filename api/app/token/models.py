@@ -18,7 +18,7 @@ class Token(db.Model):
     is_revoked = db.Column(db.Boolean, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), index=True)
 
-    user = db.relationship("User", back_populates="tokens")
+    user = db.relationship("User")
 
     @classmethod
     def register_tokens_for_user(cls, tokens: List[str], user: User) -> None:

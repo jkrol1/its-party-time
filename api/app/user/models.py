@@ -15,8 +15,6 @@ class User(db.Model):
     first_seen = db.Column(db.DateTime, default=datetime.utcnow)
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
-    tokens = db.relationship("Token", back_populates="user", lazy="noload")
-
     @property
     def password(self) -> None:
         raise AttributeError("password attribute is not readable")

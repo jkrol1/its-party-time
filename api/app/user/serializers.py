@@ -1,6 +1,5 @@
 from app.extensions import ma
 from app.user.models import User
-from app.token.serializers import TokenSchema
 
 
 class UserSchema(ma.SQLAlchemySchema):
@@ -12,7 +11,6 @@ class UserSchema(ma.SQLAlchemySchema):
     password = ma.String(required=True, load_only=True)
     email = ma.Email(required=True)
     last_seen = ma.auto_field(dump_only=True)
-    tokens = ma.Nested(TokenSchema, many=True)
 
 
 class UserLoginSchema(UserSchema):
