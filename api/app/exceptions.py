@@ -1,28 +1,27 @@
+from http import HTTPStatus
+
 from flask import Blueprint
 from sqlalchemy.exc import IntegrityError
+from werkzeug.exceptions import HTTPException
 
 from app.types import EndpointResponse
 
 exceptions = Blueprint("exceptions", __name__)
 
 
-class InvalidCredentialsError(Exception):
-    pass
-
-
-@exceptions.app_errorhandler(InvalidCredentialsError)
-def invalid_credentials_error(error: InvalidCredentialsError) -> EndpointResponse:
+@exceptions.app_errorhandler(HTTPException)
+def http_error_as_json(error: HTTPException) -> EndpointResponse:
     return {
-               "code": 401,
-               "message": "Invalid email or password",
-               "description": str(error),
-           }, 401
+               'code': error.code,
+               'message': error.name,
+               'description': error.description,
+           }, error.code
 
 
 @exceptions.app_errorhandler(IntegrityError)
 def sqlalchemy_integrity_error(error: IntegrityError) -> EndpointResponse:
     return {
-               "code": 400,
+               "code": HTTPStatus.BAD_REQUEST.value,
                "message": 'Database integrity error',
                "description": str(error.orig),
-           }, 400
+           }, HTTPStatus.BAD_REQUEST.value

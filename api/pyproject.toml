@@ -25,6 +25,8 @@ Flask-HTTPAuth-stubs = "^0.1.5"
 sqlalchemy-stubs = "^0.4"
 pytest-stub = "^1.1.0"
 Faker = "^13.14.0"
+pylint = "^2.14.4"
+flake8 = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
