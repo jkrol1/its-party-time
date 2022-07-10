@@ -24,6 +24,7 @@ def create_app(config: Type[Config]) -> Flask:
 
     _register_blueprints(app)
     _register_extensions(app)
+    _register_shell_context(app)
     _register_callbacks()
     _register_apispec()
 
@@ -55,3 +56,14 @@ def _register_apispec() -> None:
     api_spec.register(user.resources.register_user, blueprint=user.resources.blueprint.name)
     api_spec.register(event.resources.get_event, blueprint=event.resources.blueprint.name)
     api_spec.register(token.resources.create_tokens, blueprint=token.resources.blueprint.name)
+
+
+def _register_shell_context(app):
+    def shell_context():
+        return {
+            "db": db,
+            "User": user.models.User,
+            "Token": token.models.Token,
+        }
+
+    app.shell_context_processor(shell_context)
