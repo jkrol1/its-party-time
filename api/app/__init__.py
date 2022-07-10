@@ -7,6 +7,7 @@ from config import Config
 
 from app import event, token, user
 from app.auth_callbacks import user_identity_loader_callback, user_lookup_callback, check_if_token_revoked_callback
+from app.exceptions import exceptions
 
 
 def create_app(config: Type[Config]) -> Flask:
@@ -41,6 +42,7 @@ def _register_blueprints(app: Flask) -> None:
     app.register_blueprint(event.resources.blueprint)
     app.register_blueprint(user.resources.blueprint)
     app.register_blueprint(token.resources.blueprint)
+    app.register_blueprint(exceptions)
 
 
 def _register_callbacks() -> None:
