@@ -20,4 +20,4 @@ class Event(db.Model):
     longitude = db.Column(db.Float)
     playlist_link = db.Column(db.Text)
     organizer_id = db.Column(db.Integer, db.ForeignKey("users.id"), index=True)
-    organizer = db.relationship("User", lazy="select")
+    organizer = db.relationship("User")
