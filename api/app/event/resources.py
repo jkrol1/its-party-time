@@ -2,7 +2,7 @@ from http import HTTPStatus
 from flask import Blueprint
 from flask_jwt_extended import jwt_required, current_user
 
-from app.exceptions import EndpointResponse
+from app.types import EndpointResponse
 
 blueprint = Blueprint("event", __name__, url_prefix="/api/v1/events")
 
