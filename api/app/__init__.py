@@ -5,7 +5,7 @@ from flask import Flask
 from app.extensions import db, ma, migrate, api_spec, jwt
 from config import Config
 
-from app import event, token, user
+from app import token, user, event
 from app.auth_callbacks import user_identity_loader_callback, user_lookup_callback, check_if_token_revoked_callback
 from app.exceptions import exceptions
 
@@ -64,6 +64,8 @@ def _register_shell_context(app):
             "db": db,
             "User": user.models.User,
             "Token": token.models.Token,
+            "Event": event.models.Event,
+            "event_participants": event.models.event_participants
         }
 
     app.shell_context_processor(shell_context)
