@@ -4,7 +4,8 @@ event_participants = db.Table(
     "event_participants",
     db.Model.metadata,
     db.Column("event_id", db.Integer, db.ForeignKey("events.id")),
-    db.Column("user_id", db.Integer, db.ForeignKey("users.id"))
+    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
+    db.Column("is_organizer", db.Boolean, nullable=False, default=False),
 )
 
 
