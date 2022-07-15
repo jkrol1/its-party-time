@@ -20,11 +20,11 @@ class Token(db.Model):
 
     user = db.relationship("User")
 
-    @classmethod
-    def register_tokens_for_user(cls, tokens: List[str], user: User) -> None:
+    @staticmethod
+    def register_tokens_for_user(tokens: List[str], user: User) -> None:
         for token in tokens:
             decoded_token = decode_token(token)
-            db.session.add(cls(
+            db.session.add(Token(
                 token_id=decoded_token["jti"],
                 token_expiration=datetime.fromtimestamp(decoded_token["exp"]),
                 token_type=decoded_token["type"],
