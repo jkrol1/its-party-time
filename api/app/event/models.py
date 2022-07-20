@@ -1,6 +1,8 @@
-from enum import Enum
+from __future__ import annotations
+from typing import List
 
 from app.extensions import db
+from app.event.roles import EventPermission, Role
 
 event_participants = db.Table(
     "event_participants",
@@ -12,17 +14,13 @@ event_participants = db.Table(
 )
 
 
-class EventPermission(Enum):
-    CONTRIBUTE = 1
-    MODERATE = 2
-    DELETE_EVENT = 4
+class EventRole(db.Model):
+    __tablename__ = "event_roles"
 
-
-class EventRole:
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     permissions = db.Column(db.Integer, default=0)
-    event_participant_id = db.Column(db.Integer, db.ForeignKey("event_participants.id"), index=True)
+    default = db.Column(db.Boolean, default=False, index=True)
 
     def add_permission(self, permission: int) -> None:
         if not self.has_permission(permission):
@@ -39,8 +37,27 @@ class EventRole:
         return self.permissions & permission == permission
 
     @staticmethod
-    def insert_roles():
-        pass
+    def add_roles() -> None:
+        for role in Role:
+            created_role = EventRole._create_role_with_specified_permissions(role.name, role.value)
+            db.session.add(created_role)
+        db.session.commit()
+
+    @staticmethod
+    def _create_role_with_specified_permissions(role_name: str, permissions: List[EventPermission]) -> EventRole:
+        role = EventRole.query.filter_by(name=role_name).first()
+        if not role:
+            role = EventRole(name=role_name)
+        role.reset_permissions()
+        if role.name == "USER":
+            role.default = True
+        EventRole._add_permissions_to_role(permissions, role)
+        return role
+
+    @staticmethod
+    def _add_permissions_to_role(permissions: List[EventPermission], role: EventRole) -> None:
+        for permission in permissions:
+            role.add_permission(permission)
 
 
 class Event(db.Model):
