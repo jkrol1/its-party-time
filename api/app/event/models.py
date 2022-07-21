@@ -18,7 +18,7 @@ class EventRole(db.Model):
     __tablename__ = "event_roles"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
+    name = db.Column(db.Enum(Role), unique=True)
     permissions = db.Column(db.Integer, default=0)
     default = db.Column(db.Boolean, default=False, index=True)
 
@@ -37,21 +37,21 @@ class EventRole(db.Model):
         return self.permissions & permission == permission
 
     @staticmethod
-    def add_roles() -> None:
-        for role in Role:
-            created_role = EventRole._create_role_with_specified_permissions(role.name, role.value)
+    def create_roles() -> None:
+        for role_to_create in Role:
+            created_role = EventRole._create_role(role_to_create)
             db.session.add(created_role)
         db.session.commit()
 
     @staticmethod
-    def _create_role_with_specified_permissions(role_name: str, permissions: List[EventPermission]) -> EventRole:
-        role = EventRole.query.filter_by(name=role_name).first()
+    def _create_role(role_to_create: Role) -> EventRole:
+        role = EventRole.query.filter_by(name=role_to_create).first()
         if not role:
-            role = EventRole(name=role_name)
+            role = EventRole(name=role_to_create)
         role.reset_permissions()
-        if role.name == "USER":
+        if role.name == Role.USER:
             role.default = True
-        EventRole._add_permissions_to_role(permissions, role)
+        EventRole._add_permissions_to_role(role_to_create.value, role)
         return role
 
     @staticmethod

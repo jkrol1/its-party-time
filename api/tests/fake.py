@@ -18,5 +18,16 @@ class FakeUser(ToDictMixin):
 
 
 @dataclass
+class FakeEvent(ToDictMixin):
+    title: str = fake.text(max_nb_chars=124)
+    description: str = fake.text(max_nb_chars=372)
+    address: str = fake.address()
+    latitude: float = fake.latitude()
+    longitude: float = fake.longitude()
+    playlist_link: str = fake.url()
+
+
+@dataclass
 class FakeInputData:
     user: FakeUser = FakeUser()
+    event: FakeEvent = FakeEvent()

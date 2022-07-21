@@ -1,11 +1,14 @@
-from typing import Generator
+from typing import Dict, Generator
 
-from flask_sqlalchemy import SQLAlchemy
 from flask.testing import FlaskClient
+from flask_jwt_extended import create_access_token
+from flask_sqlalchemy import SQLAlchemy
 import pytest
 
 from app import create_app
 from app.extensions import db as db_fsa
+from app.event.models import EventRole
+from app.event.roles import Role
 from app.user.models import User
 from config import TestConfig
 
@@ -40,6 +43,21 @@ def user(db, fake_input_data) -> User:
     db.session.add(user)
     db.session.commit()
     return user
+
+
+@pytest.fixture()
+def access_token(user) -> str:
+    return create_access_token(user)
+
+
+@pytest.fixture()
+def event_roles(test_client) -> Dict[Role, EventRole]:
+    EventRole.create_roles()
+    event_roles = EventRole.query.all()
+    event_roles_dict = dict()
+    for event_role in event_roles:
+        event_roles_dict[event_role.name] = event_role
+    return event_roles_dict
 
 
 def _setup_db() -> None:
